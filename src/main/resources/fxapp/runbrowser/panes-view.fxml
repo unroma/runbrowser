@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="panes"
+      alignment="TOP_CENTER"
+      maxHeight="-Infinity"
+      maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="530.0" prefWidth="700.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fxapp.runbrowser.ControllerPanes">
+   <padding>
+      <Insets top="10.0" />
+   </padding>
+   <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="675.0">
+      <Button fx:id="addButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPane" text="+">
+         <HBox.margin>
+            <Insets bottom="25.0" left="10.0" />
+         </HBox.margin>
+      </Button>
+   </HBox>
+   <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" />
+   <ButtonBar prefHeight="40.0" prefWidth="200.0">
+      <buttons>
+         <Button fx:id="startButton" disable="true" mnemonicParsing="false" text="Start" />
+      </buttons>
+      <VBox.margin>
+         <Insets right="10.0" />
+      </VBox.margin>
+   </ButtonBar>
+</VBox>
