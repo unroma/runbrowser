@@ -17,6 +17,7 @@ public class RunBrowserApplication extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest(event -> ChromeDriverManager.closeDriver());
     }
 
     public static void main(String[] args) {

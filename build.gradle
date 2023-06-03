@@ -26,8 +26,7 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'fxapp.runbrowser'
-    mainClass = 'fxapp.runbrowser.HelloApplication'
+    mainClass = 'fxapp.runbrowser.RunBrowserApplication'
 }
 
 javafx {
@@ -40,6 +39,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.openjfx:javafx-controls:18.0.1' // Include the JavaFX dependencies
+    implementation 'org.openjfx:javafx-fxml:18.0.1'
+    implementation("com.codeborne:selenide:6.15.0")
 }
 
 test {

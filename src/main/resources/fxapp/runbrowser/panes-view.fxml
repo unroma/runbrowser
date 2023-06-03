@@ -4,29 +4,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="panes"
-      alignment="TOP_CENTER"
-      maxHeight="-Infinity"
-      maxWidth="-Infinity"
-      minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="530.0" prefWidth="700.0"
-      xmlns="http://javafx.com/javafx/11.0.14-internal"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="fxapp.runbrowser.ControllerPanes">
-   <padding>
-      <Insets top="10.0" />
-   </padding>
-   <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="675.0">
-      <Button fx:id="addButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPane" text="+">
-         <HBox.margin>
-            <Insets bottom="25.0" left="10.0" />
-         </HBox.margin>
-      </Button>
-   </HBox>
+<VBox fx:id="panes" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxapp.runbrowser.ControllerPanes">
+   <Pane prefHeight="50.0" prefWidth="700.0">
+      <children>
+         <Button fx:id="addButton" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#addPane" prefHeight="25.0" prefWidth="25.0" text="+" />
+         <Label layoutX="262.0" layoutY="15.0" prefHeight="25.0" prefWidth="114.0" text="Chrome profile path:" />
+         <TextField fx:id="path" layoutX="382.0" layoutY="15.0" prefHeight="25.0" prefWidth="220.0" />
+         <CheckBox fx:id="defaultPath" layoutX="613.0" layoutY="15.0" mnemonicParsing="false" onAction="#setDefaultProfilePath" prefHeight="25.0" prefWidth="67.0" text="Default" />
+      </children>
+      <VBox.margin>
+         <Insets />
+      </VBox.margin>
+   </Pane>
    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" />
-   <ButtonBar prefHeight="40.0" prefWidth="200.0">
+   <ButtonBar prefHeight="40.0" prefWidth="700.0">
       <buttons>
-         <Button fx:id="startButton" disable="true" mnemonicParsing="false" text="Start" />
+         <Button fx:id="startButton" disable="true" mnemonicParsing="false" onAction="#start" text="Start" />
       </buttons>
       <VBox.margin>
          <Insets right="10.0" />
