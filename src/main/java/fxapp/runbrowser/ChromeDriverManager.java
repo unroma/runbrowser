@@ -55,7 +55,7 @@ public class ChromeDriverManager {
     }
 
     private static void openUrl(String url) {
-        if (url != null) {
+        if (url != null && !url.isEmpty()) {
             open(url);
         } else {
             open();

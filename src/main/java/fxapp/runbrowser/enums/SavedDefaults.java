@@ -6,24 +6,22 @@ import java.util.Arrays;
 
 public enum SavedDefaults {
 
-    EMPTY("", null),
-    VK("VK", "https://vk.com/"),
-    GMAIL("GMAIL", "https://mail.google.com/"),
-    FACEBOOK("FACEBOOK", "https://www.facebook.com/"),
-    CHAT_GPT("CHAT GPT", "https://chat.openai.com/");
+    EMPTY(null),
+    VK("https://vk.com/"),
+    GMAIL("https://mail.google.com/"),
+    FACEBOOK("https://www.facebook.com/"),
+    CHATGPT("https://chat.openai.com/");
 
     @Getter
-    private final String name;
-    @Getter
     private final String url;
-    SavedDefaults(String name, String url) {
-        this.name = name;
+
+    SavedDefaults(String url) {
         this.url = url;
     }
 
     public static SavedDefaults getDefaultByName(String name) {
         return Arrays.stream(SavedDefaults.values())
-                .filter(value ->value.getName().equals(name))
-                .findFirst().orElseThrow();
+                .filter(value -> value.name().equals(name))
+                .findFirst().orElse(EMPTY);
     }
 }

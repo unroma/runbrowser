@@ -8,7 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControllerPane implements Initializable {
@@ -31,7 +33,9 @@ public class ControllerPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        savedDefault.getItems().addAll(Arrays.stream(SavedDefaults.values()).map(SavedDefaults::getName).toList());
+        List<String> options = new ArrayList<>(Arrays.stream(SavedDefaults.values()).map(SavedDefaults::name).toList());
+        options.replaceAll(name -> name.equals(SavedDefaults.EMPTY.name()) ? "": name);
+        savedDefault.getItems().addAll(options);
         savedDefault.setOnAction(this::initSavedDefaultsIntoFields);
     }
 
@@ -39,7 +43,7 @@ public class ControllerPane implements Initializable {
         String savedDefaultValue = savedDefault.getValue();
         SavedDefaults savedDefault = SavedDefaults.getDefaultByName(savedDefaultValue);
         url.setText(savedDefault.getUrl());
-        if (url.isDisable() && savedDefault.equals(SavedDefaults.EMPTY)) {
+        if (savedDefault.equals(SavedDefaults.EMPTY)) {
             disableCredentials();
         } else  {
             enableCredentials();

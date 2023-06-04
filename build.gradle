@@ -16,6 +16,9 @@ repositories {
 
 ext {
     junitVersion = '5.8.2'
+    selenideVersion = '6.15.0'
+    jacksonVersion = '2.15.1'
+    javaFxVersion = '18.0.1'
 }
 
 sourceCompatibility = '18'
@@ -35,13 +38,12 @@ javafx {
 }
 
 dependencies {
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    implementation 'org.projectlombok:lombok:1.18.26'
-    implementation 'org.openjfx:javafx-controls:18.0.1' // Include the JavaFX dependencies
-    implementation 'org.openjfx:javafx-fxml:18.0.1'
-    implementation("com.codeborne:selenide:6.15.0")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}")
+    implementation("com.codeborne:selenide:${selenideVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
 }
 
 test {

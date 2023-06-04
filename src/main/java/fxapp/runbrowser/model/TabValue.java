@@ -1,5 +1,7 @@
 package fxapp.runbrowser.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import fxapp.runbrowser.enums.SavedDefaults;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +15,16 @@ import lombok.experimental.SuperBuilder;
 @Accessors(chain = true)
 public class TabValue {
 
+    @JsonProperty("url")
     private String url;
+    @JsonProperty("savedDefault")
+    private SavedDefaults savedDefault;
+    @JsonProperty("relative")
     private String relative;
-    private String user;
+    @JsonProperty("username")
+    private String username;
+    @JsonProperty("password")
     private String password;
-    private String savedDefault;
+    @JsonProperty("encryptAndSave")
+    private Boolean encryptAndSave;
 }
