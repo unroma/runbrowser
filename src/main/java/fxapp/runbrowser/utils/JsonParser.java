@@ -1,4 +1,4 @@
-package fxapp.runbrowser;
+package fxapp.runbrowser.utils;
 
 import fxapp.runbrowser.model.OpenTabsState;
 
@@ -8,11 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Parser {
+public class JsonParser {
 
     private final String FILE_NAME = "tabs.json";
     private final ObjectMapper MAPPER = new ObjectMapper();
-
 
     public void writeObjectToJsonFile(OpenTabsState state) {
         try {

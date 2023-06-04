@@ -24,8 +24,6 @@ public class ControllerPane implements Initializable {
     @FXML
     public PasswordField password;
     @FXML
-    public CheckBox encryptSave;
-    @FXML
     public ChoiceBox<String> savedDefault;
     @FXML
     public TextField relativeUrl;
@@ -54,16 +52,13 @@ public class ControllerPane implements Initializable {
         url.setDisable(false);
         username.setDisable(true);
         password.setDisable(true);
-        encryptSave.setDisable(true);
         username.setText(null);
         password.setText(null);
-        encryptSave.setSelected(false);
     }
 
     private void enableCredentials() {
         url.setDisable(true);
         username.setDisable(false);
         password.setDisable(false);
-        encryptSave.setDisable(false);
     }
 }

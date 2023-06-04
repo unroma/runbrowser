@@ -3,6 +3,7 @@ package fxapp.runbrowser;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import fxapp.runbrowser.model.TabValue;
+import fxapp.runbrowser.utils.ProcessUtils;
 import lombok.Getter;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -40,7 +41,7 @@ public class ChromeDriverManager {
     public static void closeDriver() {
         Selenide.closeWebDriver();
         System.out.println("Web driver closed");
-        Utils.killChromeProcess();
+        ProcessUtils.killChromeProcess();
     }
 
     private static void openTabs() {

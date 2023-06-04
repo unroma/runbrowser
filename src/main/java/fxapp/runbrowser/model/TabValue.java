@@ -25,6 +25,4 @@ public class TabValue {
     private String username;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("encryptAndSave")
-    private Boolean encryptAndSave;
 }

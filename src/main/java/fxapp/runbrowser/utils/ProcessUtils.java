@@ -1,4 +1,4 @@
-package fxapp.runbrowser;
+package fxapp.runbrowser.utils;
 
 import lombok.experimental.UtilityClass;
 
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @UtilityClass
-public class Utils {
+public class ProcessUtils {
 
     private final String TASK_LIST = "tasklist";
     private final String PROCESS_NAME = "chromedriver";

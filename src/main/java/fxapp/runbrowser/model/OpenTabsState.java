@@ -24,5 +24,4 @@ public class OpenTabsState {
     private String path;
     @JsonProperty("tabs")
     private List<TabValue> tabs;
-
 }

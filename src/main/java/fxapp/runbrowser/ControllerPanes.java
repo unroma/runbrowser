@@ -3,6 +3,8 @@ package fxapp.runbrowser;
 import fxapp.runbrowser.enums.SavedDefaults;
 import fxapp.runbrowser.model.OpenTabsState;
 import fxapp.runbrowser.model.TabValue;
+import fxapp.runbrowser.utils.EncryptUtils;
+import fxapp.runbrowser.utils.JsonParser;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,11 +82,11 @@ public class ControllerPanes implements Initializable {
                         .loadWhenStart(loadWhenStart.isSelected())
                         .path(path.getText())
                         .tabs(ChromeDriverManager.getTabs()).build();
-        Parser.writeObjectToJsonFile(state);
+        JsonParser.writeObjectToJsonFile(state);
     }
 
     public void loadFromFile() {
-        OpenTabsState state = Parser.readObjectFromJsonFile();
+        OpenTabsState state = JsonParser.readObjectFromJsonFile();
         if (state != null) {
             createdPanes.clear();
             clearScrollPane();
@@ -124,9 +126,8 @@ public class ControllerPanes implements Initializable {
         if (tabValue.getSavedDefault() != SavedDefaults.EMPTY) {
             controllerPane.url.setText(tabValue.getSavedDefault().getUrl());
             controllerPane.savedDefault.setValue(tabValue.getSavedDefault().name());
-            controllerPane.username.setText(tabValue.getUsername());
-            controllerPane.password.setText(tabValue.getPassword());
-            controllerPane.encryptSave.setSelected(tabValue.getEncryptAndSave());
+            controllerPane.username.setText(EncryptUtils.decryptText(tabValue.getUsername()));
+            controllerPane.password.setText(EncryptUtils.decryptText(tabValue.getPassword()));
         } else {
             controllerPane.url.setText(tabValue.getUrl());
         }
@@ -193,17 +194,16 @@ public class ControllerPanes implements Initializable {
             TabValue tab = TabValue.builder()
                     .url(urlValue)
                     .savedDefault(savedDefault)
-                    .username(controllerPane.username.getText())
-                    .password(controllerPane.password.getText())
+                    .username(EncryptUtils.encryptText(controllerPane.username.getText()))
+                    .password(EncryptUtils.encryptText(controllerPane.password.getText()))
                     .relative(controllerPane.relativeUrl.getText())
-                    .encryptAndSave(controllerPane.encryptSave.isSelected())
                     .build();
             ChromeDriverManager.getTabs().add(tab);
         });
     }
 
     private void initFromFile() {
-        OpenTabsState state = Parser.readObjectFromJsonFile();
+        OpenTabsState state = JsonParser.readObjectFromJsonFile();
         if (state != null) {
             if (state.getLoadWhenStart()) {
                 setAppValues(state);
