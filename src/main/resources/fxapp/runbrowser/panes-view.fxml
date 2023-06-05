@@ -3,8 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="panes" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxapp.runbrowser.ControllerPanes">
+<VBox fx:id="panes" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxapp.runbrowser.ControllerPanes">
    <Pane prefHeight="50.0" prefWidth="700.0">
       <children>
          <Button fx:id="addButton" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#addPane" prefHeight="25.0" prefWidth="25.0" text="+" />
@@ -17,6 +18,16 @@
       </VBox.margin>
    </Pane>
    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" />
+   <Pane prefHeight="20.0" prefWidth="700.0">
+      <children>
+         <Button fx:id="clearButton" layoutX="645.0" layoutY="2.0" mnemonicParsing="false" onAction="#clearConsole" prefHeight="15.0" prefWidth="30.0" text="Clear">
+            <font>
+               <Font name="Tahoma" size="8.0" />
+            </font>
+         </Button>
+      </children>
+   </Pane>
+   <TextArea fx:id="consoleOutput" editable="false" prefHeight="100.0" prefWidth="700.0" />
    <Pane prefHeight="50.0" prefWidth="700.0">
       <children>
          <Button fx:id="startButton" disable="true" layoutX="600.0" layoutY="10.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" text="Start" />

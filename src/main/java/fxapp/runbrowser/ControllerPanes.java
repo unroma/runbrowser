@@ -5,7 +5,7 @@ import fxapp.runbrowser.model.OpenTabsState;
 import fxapp.runbrowser.model.TabValue;
 import fxapp.runbrowser.utils.EncryptUtils;
 import fxapp.runbrowser.utils.JsonParser;
-import javafx.concurrent.Task;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,11 +16,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class ControllerPanes implements Initializable {
 
@@ -28,6 +28,7 @@ public class ControllerPanes implements Initializable {
     private static final String PANE_VIEW_RESOURCE = "values-view.fxml";
     private static final String REMOVE_ID = "pane_to_remove";
     private static final String PATH_TO_PROFILE = "\\AppData\\Local\\Google\\Chrome\\User Data";
+    @FXML
     private String pathToProfile;
     @FXML
     private VBox panes;
@@ -40,6 +41,10 @@ public class ControllerPanes implements Initializable {
     @FXML
     private ScrollPane scrollPane;
     @FXML
+    public Button clearButton;
+    @FXML
+    public TextArea consoleOutput;
+    @FXML
     private Button saveButton;
     @FXML
     private Button loadButton;
@@ -50,6 +55,7 @@ public class ControllerPanes implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        redirectConsoleOutput();
         initFromFile();
     }
 
@@ -97,17 +103,11 @@ public class ControllerPanes implements Initializable {
     public void start() {
         panes.setDisable(true);
         setToStorage();
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() {
-                ChromeDriverManager.initDriver(path.getText());
-                ChromeDriverManager.closeDriver();
-                panes.setDisable(false);
-                return null;
-            }
-        };
-        Thread thread = new Thread(task);
-        thread.start();
+        runWebDriverTask();
+    }
+
+    public void clearConsole() {
+        consoleOutput.setText(null);
     }
 
     private void addPane(TabValue tabValue) {
@@ -220,5 +220,35 @@ public class ControllerPanes implements Initializable {
         if (state.getTabs().isEmpty()) {
             startButton.setDisable(true);
         }
+    }
+
+    private void redirectConsoleOutput() {
+        OutputStream outputStream = new OutputStream() {
+            @Override
+            public void write(int b) {
+                Platform.runLater(() -> consoleOutput.appendText(String.valueOf((char) b)));
+            }
+        };
+        PrintStream printStream = new PrintStream(outputStream, true);
+        System.setOut(printStream);
+    }
+
+    private void runWebDriverTask() {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> {
+            ChromeDriverManager.initDriver(path.getText());
+            ChromeDriverManager.closeDriver();
+            return null;
+        }, executor);
+        future.thenAccept(result -> {
+            executor.shutdown();
+            System.out.println("Done!");
+            panes.setDisable(false);
+        }).exceptionally(e -> {
+            System.out.printf("Exception occurred during webdriver usage %s", e.getMessage());
+            executor.shutdown();
+            panes.setDisable(false);
+            return null;
+        });
     }
 }

@@ -32,6 +32,7 @@ public class ChromeDriverManager {
         if (!path.isEmpty()) {
             options.addArguments("user-data-dir=".concat(path));
         }
+        options.addArguments("--no-sandbox");
         Configuration.browser = CHROME;
         Configuration.holdBrowserOpen = true;
         Configuration.browserCapabilities.setCapability(ChromeOptions.CAPABILITY, options);

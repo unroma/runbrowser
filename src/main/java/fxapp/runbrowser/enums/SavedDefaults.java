@@ -10,7 +10,7 @@ public enum SavedDefaults {
     VK("https://vk.com/"),
     GMAIL("https://mail.google.com/"),
     FACEBOOK("https://www.facebook.com/"),
-    CHATGPT("https://chat.openai.com/");
+    CHATGPT("https://openai.com/blog/chatgpt");
 
     @Getter
     private final String url;
