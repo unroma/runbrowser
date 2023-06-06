@@ -4,8 +4,11 @@ import fxapp.runbrowser.enums.SavedDefaults;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,16 +18,21 @@ import java.util.ResourceBundle;
 
 public class ControllerPane implements Initializable {
 
+    private static final String REMOVE_ID = "pane_to_remove";
     @FXML
-    public Pane pane;
+    private Pane pane;
+    @Getter
     @FXML
-    public TextField url;
+    private TextField url;
+    @Getter
     @FXML
-    public TextField username;
+    private TextField username;
+    @Getter
     @FXML
-    public PasswordField password;
+    private PasswordField password;
+    @Getter
     @FXML
-    public ChoiceBox<String> savedDefault;
+    private ChoiceBox<String> savedDefault;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,6 +50,24 @@ public class ControllerPane implements Initializable {
             disableCredentials();
         } else  {
             enableCredentials();
+        }
+    }
+
+    public void closePane(ActionEvent event) {
+        Node currentButton = (Node) event.getSource();
+        Pane currentPane = (Pane) currentButton.getParent();
+        Storage.getCreatedPanes().remove(currentPane.getId());
+        currentPane.setId(REMOVE_ID);
+        ControllerPanes panes = Storage.getMain().stream().findFirst().orElseThrow();
+        VBox vBox = (VBox) panes.getScrollPane().getContent();
+        vBox.getChildren().stream()
+                .filter(pane -> pane.getId().equals(REMOVE_ID))
+                .findFirst().ifPresent(vBox.getChildren()::remove);
+        if (panes.getAddButton().isDisable() && vBox.getChildren().size() < 10) {
+            panes.getAddButton().setDisable(false);
+        }
+        if (vBox.getChildren().isEmpty()) {
+            panes.getStartButton().setDisable(true);
         }
     }
 

@@ -9,11 +9,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,32 +24,34 @@ import java.util.concurrent.*;
 public class ControllerPanes implements Initializable {
 
     private static final String PANE_VIEW_RESOURCE = "values-view.fxml";
-    private static final String REMOVE_ID = "pane_to_remove";
     private static final String PATH_TO_PROFILE = "\\AppData\\Local\\Google\\Chrome\\User Data";
     @FXML
     private String pathToProfile;
     @FXML
     private VBox panes;
+    @Getter
     @FXML
     private Button addButton;
     @FXML
-    public TextField path;
+    private TextField path;
     @FXML
-    public CheckBox defaultProfile;
+    private CheckBox defaultProfile;
     @FXML
+    @Getter
     private ScrollPane scrollPane;
     @FXML
-    public Button clearButton;
+    private Button clearButton;
     @FXML
-    public TextArea consoleOutput;
+    private TextArea consoleOutput;
     @FXML
     private Button saveButton;
     @FXML
     private Button loadButton;
     @FXML
     private CheckBox loadWhenStart;
+    @Getter
     @FXML
-    public Button startButton;
+    private Button startButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +65,6 @@ public class ControllerPanes implements Initializable {
         ControllerPane controllerPane = loader.getController();
         pane.setId(UUID.randomUUID().toString());
         Storage.getCreatedPanes().put(pane.getId(), controllerPane);
-        pane.getChildren().add(initCloseButton());
         addPaneNode(pane);
     }
 
@@ -120,15 +120,14 @@ public class ControllerPanes implements Initializable {
         ControllerPane controllerPane = loader.getController();
         pane.setId(UUID.randomUUID().toString());
         Storage.getCreatedPanes().put(pane.getId(), controllerPane);
-        pane.getChildren().add(initCloseButton());
 
         if (tabValue.getSavedDefault() != SavedDefaults.EMPTY) {
-            controllerPane.url.setText(tabValue.getSavedDefault().getUrl());
-            controllerPane.savedDefault.setValue(tabValue.getSavedDefault().name());
-            controllerPane.username.setText(EncryptUtils.decryptText(tabValue.getUsername()));
-            controllerPane.password.setText(EncryptUtils.decryptText(tabValue.getPassword()));
+            controllerPane.getUrl().setText(tabValue.getSavedDefault().getUrl());
+            controllerPane.getSavedDefault().setValue(tabValue.getSavedDefault().name());
+            controllerPane.getUsername().setText(EncryptUtils.decryptText(tabValue.getUsername()));
+            controllerPane.getPassword().setText(EncryptUtils.decryptText(tabValue.getPassword()));
         } else {
-            controllerPane.url.setText(tabValue.getUrl());
+            controllerPane.getUrl().setText(tabValue.getUrl());
         }
         addPaneNode(pane);
     }
@@ -155,45 +154,19 @@ public class ControllerPanes implements Initializable {
         }
     }
 
-    private Button initCloseButton() {
-        Button closeButton = new Button("X");
-        closeButton.setLayoutY(4.0);
-        closeButton.setLayoutX(660.0);
-        closeButton.setPrefHeight(16.0);
-        closeButton.setPrefWidth(16.0);
-        closeButton.setFont(Font.font("System Bold", 8.0));
-        closeButton.setOnAction(event -> {
-            Node currentButton = (Node) event.getSource();
-            Pane currentPane = (Pane) currentButton.getParent();
-            Storage.getCreatedPanes().remove(currentPane.getId());
-            currentPane.setId(REMOVE_ID);
-            VBox vBox = (VBox) scrollPane.getContent();
-            vBox.getChildren().stream()
-                    .filter(pane -> pane.getId().equals(REMOVE_ID))
-                    .findFirst().ifPresent(vBox.getChildren()::remove);
-            if (addButton.isDisable() && vBox.getChildren().size() < 10) {
-                addButton.setDisable(false);
-            }
-            if (vBox.getChildren().isEmpty()) {
-                startButton.setDisable(true);
-            }
-        });
-        return closeButton;
-    }
-
     private void setToStorage() {
         Storage.getTabs().clear();
         Storage.getCreatedPanes().values().forEach(controllerPane -> {
-            SavedDefaults savedDefault = SavedDefaults.getDefaultByName(controllerPane.savedDefault.getValue());
-            String urlValue = controllerPane.url.getText();
+            SavedDefaults savedDefault = SavedDefaults.getDefaultByName(controllerPane.getSavedDefault().getValue());
+            String urlValue = controllerPane.getUrl().getText();
             if (savedDefault != null && savedDefault != SavedDefaults.EMPTY) {
                 urlValue = savedDefault.getUrl();
             }
             TabValue tab = TabValue.builder()
                     .url(urlValue)
                     .savedDefault(savedDefault)
-                    .username(EncryptUtils.encryptText(controllerPane.username.getText()))
-                    .password(EncryptUtils.encryptText(controllerPane.password.getText()))
+                    .username(EncryptUtils.encryptText(controllerPane.getUsername().getText()))
+                    .password(EncryptUtils.encryptText(controllerPane.getPassword().getText()))
                     .build();
             Storage.getTabs().add(tab);
         });

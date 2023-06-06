@@ -13,6 +13,7 @@ public class RunBrowserApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RunBrowserApplication.class.getResource("panes-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        Storage.getMain().add(fxmlLoader.getController());
         stage.setTitle("Run browser app!");
         stage.setResizable(false);
         stage.setScene(scene);

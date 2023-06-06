@@ -13,4 +13,6 @@ public class Storage {
     private final Map<String, ControllerPane> createdPanes = new LinkedHashMap<>();
     @Getter
     private final List<TabValue> tabs = new ArrayList<>();
+    @Getter
+    private final List<ControllerPanes> main = new ArrayList<>();
 }
