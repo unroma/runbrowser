@@ -8,9 +8,9 @@ public enum SavedDefaults {
 
     EMPTY(null),
     VK("https://vk.com/"),
-    GMAIL("https://mail.google.com/"),
     FACEBOOK("https://www.facebook.com/"),
-    CHATGPT("https://openai.com/blog/chatgpt");
+    CHATGPT("https://openai.com/blog/chatgpt"),
+    LINKEDIN("https://www.linkedin.com");
 
     @Getter
     private final String url;

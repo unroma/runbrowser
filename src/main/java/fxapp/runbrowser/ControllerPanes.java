@@ -24,7 +24,6 @@ import java.util.concurrent.*;
 
 public class ControllerPanes implements Initializable {
 
-    private static final Map<String, ControllerPane> createdPanes = new HashMap<>();
     private static final String PANE_VIEW_RESOURCE = "values-view.fxml";
     private static final String REMOVE_ID = "pane_to_remove";
     private static final String PATH_TO_PROFILE = "\\AppData\\Local\\Google\\Chrome\\User Data";
@@ -64,7 +63,7 @@ public class ControllerPanes implements Initializable {
         Pane pane = loader.load();
         ControllerPane controllerPane = loader.getController();
         pane.setId(UUID.randomUUID().toString());
-        createdPanes.put(pane.getId(), controllerPane);
+        Storage.getCreatedPanes().put(pane.getId(), controllerPane);
         pane.getChildren().add(initCloseButton());
         addPaneNode(pane);
     }
@@ -87,14 +86,14 @@ public class ControllerPanes implements Initializable {
                         .defaultProfile(defaultProfile.isSelected())
                         .loadWhenStart(loadWhenStart.isSelected())
                         .path(path.getText())
-                        .tabs(ChromeDriverManager.getTabs()).build();
+                        .tabs(Storage.getTabs()).build();
         JsonParser.writeObjectToJsonFile(state);
     }
 
     public void loadFromFile() {
         OpenTabsState state = JsonParser.readObjectFromJsonFile();
         if (state != null) {
-            createdPanes.clear();
+            Storage.getCreatedPanes().clear();
             clearScrollPane();
             setAppValues(state);
         }
@@ -120,7 +119,7 @@ public class ControllerPanes implements Initializable {
         }
         ControllerPane controllerPane = loader.getController();
         pane.setId(UUID.randomUUID().toString());
-        createdPanes.put(pane.getId(), controllerPane);
+        Storage.getCreatedPanes().put(pane.getId(), controllerPane);
         pane.getChildren().add(initCloseButton());
 
         if (tabValue.getSavedDefault() != SavedDefaults.EMPTY) {
@@ -167,7 +166,7 @@ public class ControllerPanes implements Initializable {
         closeButton.setOnAction(event -> {
             Node currentButton = (Node) event.getSource();
             Pane currentPane = (Pane) currentButton.getParent();
-            createdPanes.remove(currentPane.getId());
+            Storage.getCreatedPanes().remove(currentPane.getId());
             currentPane.setId(REMOVE_ID);
             VBox vBox = (VBox) scrollPane.getContent();
             vBox.getChildren().stream()
@@ -184,8 +183,8 @@ public class ControllerPanes implements Initializable {
     }
 
     private void setToStorage() {
-        ChromeDriverManager.getTabs().clear();
-        createdPanes.values().forEach(controllerPane -> {
+        Storage.getTabs().clear();
+        Storage.getCreatedPanes().values().forEach(controllerPane -> {
             SavedDefaults savedDefault = SavedDefaults.getDefaultByName(controllerPane.savedDefault.getValue());
             String urlValue = controllerPane.url.getText();
             if (savedDefault != null && savedDefault != SavedDefaults.EMPTY) {
@@ -198,7 +197,7 @@ public class ControllerPanes implements Initializable {
                     .password(EncryptUtils.encryptText(controllerPane.password.getText()))
                     .relative(controllerPane.relativeUrl.getText())
                     .build();
-            ChromeDriverManager.getTabs().add(tab);
+            Storage.getTabs().add(tab);
         });
     }
 
