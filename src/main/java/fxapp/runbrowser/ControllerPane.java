@@ -25,9 +25,6 @@ public class ControllerPane implements Initializable {
     public PasswordField password;
     @FXML
     public ChoiceBox<String> savedDefault;
-    @FXML
-    public TextField relativeUrl;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

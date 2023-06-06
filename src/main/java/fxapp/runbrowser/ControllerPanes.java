@@ -130,7 +130,6 @@ public class ControllerPanes implements Initializable {
         } else {
             controllerPane.url.setText(tabValue.getUrl());
         }
-        controllerPane.relativeUrl.setText(tabValue.getRelative());
         addPaneNode(pane);
     }
 
@@ -195,7 +194,6 @@ public class ControllerPanes implements Initializable {
                     .savedDefault(savedDefault)
                     .username(EncryptUtils.encryptText(controllerPane.username.getText()))
                     .password(EncryptUtils.encryptText(controllerPane.password.getText()))
-                    .relative(controllerPane.relativeUrl.getText())
                     .build();
             Storage.getTabs().add(tab);
         });

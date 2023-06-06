@@ -19,8 +19,6 @@ public class TabValue {
     private String url;
     @JsonProperty("savedDefault")
     private SavedDefaults savedDefault;
-    @JsonProperty("relative")
-    private String relative;
     @JsonProperty("username")
     private String username;
     @JsonProperty("password")
