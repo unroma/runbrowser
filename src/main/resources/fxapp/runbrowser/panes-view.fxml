@@ -6,34 +6,38 @@
 <?import javafx.scene.text.*?>
 
 <VBox fx:id="panes" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxapp.runbrowser.ControllerPanes">
-   <Pane prefHeight="50.0" prefWidth="700.0">
-      <children>
-         <Button fx:id="addButton" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#addPane" prefHeight="25.0" prefWidth="25.0" text="+" />
-         <Label layoutX="262.0" layoutY="15.0" prefHeight="25.0" prefWidth="114.0" text="Chrome profile path:" />
-         <TextField fx:id="path" layoutX="382.0" layoutY="15.0" prefHeight="25.0" prefWidth="220.0" />
-         <CheckBox fx:id="defaultProfile" layoutX="613.0" layoutY="15.0" mnemonicParsing="false" onAction="#setDefaultProfilePath" prefHeight="25.0" prefWidth="67.0" text="Default" />
-      </children>
+   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0"
+         prefWidth="700.0">
       <VBox.margin>
-         <Insets />
+         <Insets/>
       </VBox.margin>
+      <Button fx:id="addButton" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" mnemonicParsing="false"
+              onAction="#addPane" prefHeight="25.0" prefWidth="25.0" text="+"/>
+      <Label layoutX="262.0" layoutY="15.0" prefHeight="25.0" prefWidth="114.0" text="Chrome profile path:"/>
+      <TextField fx:id="path" layoutX="382.0" layoutY="15.0" prefHeight="25.0" prefWidth="220.0"/>
+      <CheckBox fx:id="defaultProfile" layoutX="613.0" layoutY="15.0" mnemonicParsing="false"
+                onAction="#setDefaultProfilePath" prefHeight="25.0" prefWidth="67.0" text="Default"/>
    </Pane>
-   <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="470.0" prefWidth="700.0" />
-   <Pane prefHeight="20.0" prefWidth="700.0">
-      <children>
-         <Button fx:id="clearButton" layoutX="645.0" layoutY="2.0" mnemonicParsing="false" onAction="#clearConsole" prefHeight="15.0" prefWidth="30.0" text="Clear">
-            <font>
-               <Font name="Tahoma" size="8.0" />
-            </font>
-         </Button>
-      </children>
+   <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxWidth="700.0" minHeight="100.0" minWidth="700.0" prefHeight="470.0" prefWidth="700.0" VBox.vgrow="SOMETIMES" />
+   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0"
+         prefWidth="700.0">
+      <Button fx:id="clearButton" layoutX="645.0" layoutY="2.0" mnemonicParsing="false" onAction="#clearConsole"
+              prefHeight="15.0" prefWidth="30.0" text="Clear">
+         <font>
+            <Font name="Tahoma" size="8.0"/>
+         </font>
+      </Button>
    </Pane>
-   <TextArea fx:id="consoleOutput" editable="false" prefHeight="100.0" prefWidth="700.0" />
-   <Pane prefHeight="50.0" prefWidth="700.0">
-      <children>
-         <Button fx:id="startButton" disable="true" layoutX="600.0" layoutY="10.0" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="75.0" text="Start" />
-         <Button fx:id="saveButton" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#saveToFile" prefHeight="25.0" prefWidth="75.0" text="Save" />
-         <Button fx:id="loadButton" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadFromFile" prefHeight="25.0" prefWidth="75.0" text="Load" />
-         <CheckBox fx:id="loadWhenStart" layoutX="207.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="Load when start" />
-      </children>
+   <TextArea fx:id="consoleOutput" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" />
+   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0"
+         prefWidth="700.0">
+      <Button fx:id="startButton" disable="true" layoutX="600.0" layoutY="10.0" mnemonicParsing="false"
+              onAction="#start" prefHeight="25.0" prefWidth="75.0" text="Start"/>
+      <Button fx:id="saveButton" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#saveToFile"
+              prefHeight="25.0" prefWidth="75.0" text="Save"/>
+      <Button fx:id="loadButton" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadFromFile"
+              prefHeight="25.0" prefWidth="75.0" text="Load"/>
+      <CheckBox fx:id="loadWhenStart" layoutX="207.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0"
+                prefWidth="115.0" text="Load when start"/>
    </Pane>
 </VBox>

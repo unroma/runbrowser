@@ -15,7 +15,8 @@ public class RunBrowserApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         Storage.getMain().add(fxmlLoader.getController());
         stage.setTitle("Run browser app!");
-        stage.setResizable(false);
+        stage.setMinWidth(715);
+        stage.setMinHeight(410);
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(event -> ChromeDriverManager.closeDriver());
