@@ -81,7 +81,7 @@ public class ControllerPanes implements Initializable {
     }
 
     public void saveToFile() {
-        setToStorage();
+        Storage.setToStorage();
         OpenTabsState state = OpenTabsState.builder()
                         .defaultProfile(defaultProfile.isSelected())
                         .loadWhenStart(loadWhenStart.isSelected())
@@ -101,7 +101,7 @@ public class ControllerPanes implements Initializable {
 
     public void start() {
         panes.setDisable(true);
-        setToStorage();
+        Storage.setToStorage();
         runWebDriverTask();
     }
 
@@ -152,24 +152,6 @@ public class ControllerPanes implements Initializable {
         if (vBox != null) {
             vBox.getChildren().clear();
         }
-    }
-
-    private void setToStorage() {
-        Storage.getTabs().clear();
-        Storage.getCreatedPanes().values().forEach(controllerPane -> {
-            SavedDefaults savedDefault = SavedDefaults.getDefaultByName(controllerPane.getSavedDefault().getValue());
-            String urlValue = controllerPane.getUrl().getText();
-            if (savedDefault != null && savedDefault != SavedDefaults.EMPTY) {
-                urlValue = savedDefault.getUrl();
-            }
-            TabValue tab = TabValue.builder()
-                    .url(urlValue)
-                    .savedDefault(savedDefault)
-                    .username(EncryptUtils.encryptText(controllerPane.getUsername().getText()))
-                    .password(EncryptUtils.encryptText(controllerPane.getPassword().getText()))
-                    .build();
-            Storage.getTabs().add(tab);
-        });
     }
 
     private void initFromFile() {
