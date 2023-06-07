@@ -34,7 +34,7 @@ public class ChromeDriverManager {
         }
         options.addArguments("--no-sandbox");
         Configuration.browser = CHROME;
-        Configuration.baseUrl ="about:blank";
+        Configuration.baseUrl = "about:blank";
         Configuration.holdBrowserOpen = true;
         Configuration.screenshots = false;
         Configuration.savePageSource = false;

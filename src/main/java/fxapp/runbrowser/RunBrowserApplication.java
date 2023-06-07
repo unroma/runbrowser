@@ -21,8 +21,4 @@ public class RunBrowserApplication extends Application {
         stage.show();
         stage.setOnCloseRequest(event -> ChromeDriverManager.closeDriver());
     }
-
-    public static void main(String[] args) {
-        launch();
-    }
 }
