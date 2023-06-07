@@ -1,6 +1,7 @@
 package fxapp.runbrowser.pages;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import lombok.experimental.UtilityClass;
 import org.openqa.selenium.By;
 
@@ -14,9 +15,9 @@ public class ChatGptPage {
     private final By passwordInput = By.id("password");
     private final By continueButton = By.name("action");
 
-    public void login(String username, String password, int tabIndex) {
+    public void login(String username, String password) {
         $(loginLink).click();
-        Selenide.switchTo().window(tabIndex);
+        Selenide.switchTo().window(WebDriverRunner.getWebDriver().getWindowHandles().size() -1);
         $(usernameInput).setValue(username);
         $(continueButton).click();
         $(passwordInput).setValue(password);

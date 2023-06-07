@@ -197,7 +197,7 @@ public class ControllerPanes implements Initializable {
             System.out.println("Done!");
             panes.setDisable(false);
         }).exceptionally(e -> {
-            System.out.printf("Exception occurred during webdriver usage %s", e.getMessage());
+            System.out.printf("Exception occurred during webdriver usage: %s", e.getMessage());
             executor.shutdown();
             panes.setDisable(false);
             return null;

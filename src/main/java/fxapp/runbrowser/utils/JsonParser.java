@@ -17,9 +17,10 @@ public class JsonParser {
         try {
             File file = new File(FILE_NAME);
             MAPPER.writeValue(file, state);
-            System.out.println("Object saved to JSON file successfully.");
+            System.out.printf("Properties were saved to JSON file: '%s' successfully.\n", FILE_NAME);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.printf("Properties can't be saved to JSON file: '%s' successfully.\n", FILE_NAME);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -28,9 +29,9 @@ public class JsonParser {
         try {
             File file = new File(FILE_NAME);
             state = MAPPER.readValue(file, OpenTabsState.class);
-            System.out.println("Object was read from JSON file successfully.");
+            System.out.printf("Properties were read from JSON file: '%s' successfully.\n", FILE_NAME);
         } catch (IOException e) {
-            System.out.printf("%s file was not found or could not be read%n", FILE_NAME);
+            System.out.printf("%s file was not found or could not be read\n", FILE_NAME);
         }
         return state;
     }
