@@ -26,5 +26,6 @@ public class LinkedinPage {
         $(emailInput).setValue(username);
         $(passwordInput).setValue(password);
         $(loginButton).click();
+        System.out.println("Linkedin login done.");
     }
 }

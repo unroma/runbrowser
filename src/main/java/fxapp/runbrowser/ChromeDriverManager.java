@@ -58,7 +58,7 @@ public class ChromeDriverManager {
             } else {
                 String script = String.format("window.open('%s', '_blank');", Storage.getTabs().get(index).getUrl());
                 Selenide.executeJavaScript(script);
-                Selenide.switchTo().window(+WebDriverRunner.getWebDriver().getWindowHandles().size() -1);
+                Selenide.switchTo().window(WebDriverRunner.getWebDriver().getWindowHandles().size() -1);
             }
             loginPage(Storage.getTabs().get(index));
         });

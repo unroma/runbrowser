@@ -16,6 +16,7 @@ public class VkPage {
         $(loginButton).click();
         $(passwordInput).setValue(password);
         $(loginButton).click();
+        System.out.println("VK login done.");
     }
 
 }

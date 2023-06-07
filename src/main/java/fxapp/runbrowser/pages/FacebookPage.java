@@ -20,5 +20,6 @@ public class FacebookPage {
         $(emailInput).setValue(username);
         $(passwordInput).setValue(password);
         $(loginButton).click();
+        System.out.println("Facebook login done.");
     }
 }

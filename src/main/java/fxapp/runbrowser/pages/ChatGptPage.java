@@ -22,5 +22,6 @@ public class ChatGptPage {
         $(continueButton).click();
         $(passwordInput).setValue(password);
         $(continueButton).click();
+        System.out.println("Chat GPT login done.");
     }
 }
