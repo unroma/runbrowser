@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.ex.ElementNotFound;
+import com.codeborne.selenide.ex.ElementShould;
 import fxapp.runbrowser.model.TabValue;
 import fxapp.runbrowser.pages.ChatGptPage;
 import fxapp.runbrowser.pages.FacebookPage;
@@ -20,6 +21,7 @@ import java.util.stream.IntStream;
 
 import static com.codeborne.selenide.Browsers.CHROME;
 import static com.codeborne.selenide.Selenide.open;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @UtilityClass
 public class ChromeDriverManager {
@@ -65,7 +67,7 @@ public class ChromeDriverManager {
     }
 
     private void openUrl(String url) {
-        if (url != null && !url.isEmpty()) {
+        if (!isEmpty(url)) {
             open(url);
         } else {
             open();
@@ -75,19 +77,20 @@ public class ChromeDriverManager {
     private void loginPage(TabValue tabValue) {
         String username = EncryptUtils.decryptText(tabValue.getUsername());
         String password = EncryptUtils.decryptText(tabValue.getPassword());
+        if (isEmpty(username) || isEmpty(password)) return;
         switch (tabValue.getSavedDefault()) {
-            case FACEBOOK -> withElementNotFoundExceptionHandle(FacebookPage::login, username, password);
-            case CHATGPT -> withElementNotFoundExceptionHandle(ChatGptPage::login, username, password);
-            case LINKEDIN -> withElementNotFoundExceptionHandle(LinkedinPage::login, username, password);
-            case VK -> withElementNotFoundExceptionHandle(VkPage::login, username, password);
+            case FACEBOOK -> withElementExceptionHandle(FacebookPage::login, username, password);
+            case CHATGPT -> withElementExceptionHandle(ChatGptPage::login, username, password);
+            case LINKEDIN -> withElementExceptionHandle(LinkedinPage::login, username, password);
+            case VK -> withElementExceptionHandle(VkPage::login, username, password);
         }
     }
 
-    private void withElementNotFoundExceptionHandle(BiConsumer<String,String> loginMethod, String username, String password) {
+    private void withElementExceptionHandle(BiConsumer<String,String> loginMethod, String username, String password) {
         try {
             loginMethod.accept(username,password);
-        } catch (ElementNotFound | NoSuchElementException e) {
-            System.out.printf("Got exception during login: %s", e.getMessage());
+        } catch (ElementNotFound | NoSuchElementException | ElementShould e) {
+            System.out.printf("Got exception during login:\n%s", e.getMessage());
         }
     }
 }
